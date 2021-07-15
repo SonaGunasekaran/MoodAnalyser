@@ -7,21 +7,28 @@ namespace MoodAnalyser
    public class Mood
     {
         string message;
-        public Mood(string msg)
+        public Mood(string message)
         {
-            this.message = msg;
+            this.message = message;
         }
 
         public string CheckMood()
         {
-            if (this.message.ToLower().Contains("happy"))
+            try
+            {
+                if (message.ToLower().Contains("happy"))
+                {
+                    return "happy";
+                }
+                else
+                {
+                    return "sad";
+                }
+            }
+            catch (NullReferenceException)
             {
                 return "happy";
-            }
-            else
-            {
-                return "sad";
-            }
+            }   
         }
-    }
+   }
 }
