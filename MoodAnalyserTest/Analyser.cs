@@ -6,24 +6,16 @@ namespace MoodAnalyserTest
     [TestClass]
     public class Analyser
     {
-        Mood mah,mas,mahNull;
         string msg;
-        [TestInitialize]
-        public void Setup()
-        {
-            this.msg = "Happy Mood";
-            mah = new Mood(this.msg);
-            mas = new Mood("Sad mood");
-            mahNull = new Mood(null);
-        }
         [TestMethod]
         [TestCategory("happy")]
         public void Happy()
         {
             //Arrange
             string actual, expected = "happy";
+            string message = "I am in happy mood";
             //Act
-            actual = mah.CheckMood();
+            actual = new Mood(message).CheckMood();
             //Assert
             Assert.AreEqual(actual, expected);
         }
@@ -33,8 +25,9 @@ namespace MoodAnalyserTest
         {
             //Arrange
             string actual, expected = "sad";
+            string message = "I am in sad mood";
             //Act
-            actual = mas.CheckMood();
+            actual = new Mood(message).CheckMood();
             //Assert
             Assert.AreEqual(actual, expected);
         }
@@ -44,10 +37,45 @@ namespace MoodAnalyserTest
         {
             //Arrange
             string actual, expected = "happy";
+            string message = null;
             //Act
-            actual = mahNull.CheckMood();
+             actual = new Mood(message).CheckMood();
             //Assert
             Assert.AreEqual(actual, expected);
+        }
+        [TestMethod]
+        public void CustomException()
+        {
+            string expected = "Mood should not be empty";
+            try
+            {
+                string message = "";
+                //act
+                string actual = new Mood(message).CheckMood();
+            }
+            catch (CustomMoodAnalyser ex)
+            {
+                //assert
+                Assert.AreEqual(expected, ex.Message);
+            }
+
+        }
+        [TestMethod]
+        public void ShoulNotBeNull()
+        {
+            string expected = "Mood should not be null";
+            try
+            {
+                string message = null;
+                //act
+                string actual = new Mood(message).CheckMood();
+            }
+            catch (CustomMoodAnalyser ex)
+            {
+                //assert
+                Assert.AreEqual(expected, ex.Message);
+            }
+
         }
     }
 }

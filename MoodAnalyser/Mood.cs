@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MoodAnalyser
 {
-   public class Mood
+    public class Mood
     {
         string message;
         public Mood(string message)
@@ -16,19 +16,29 @@ namespace MoodAnalyser
         {
             try
             {
-                if (message.ToLower().Contains("happy"))
+                message = message.ToLower();
+                if (message.Equals(string.Empty))
                 {
-                    return "happy";
+                    throw new CustomMoodAnalyser(CustomMoodAnalyser.ExceptionType.EMPTY_EXCEPTION, "Mood should not be empty");
+
                 }
-                else
+                if (message.Equals(null))
+                {
+                    throw new CustomMoodAnalyser(CustomMoodAnalyser.ExceptionType.NULL_EXCEPTION, "Mood should not be null");
+                }
+                if (message.Contains("sad"))
                 {
                     return "sad";
                 }
+                else
+                {
+                    return "happy";
+                }
             }
-            catch (NullReferenceException)
+            catch (NullReferenceException e)
             {
                 return "happy";
-            }   
+            }
         }
-   }
+    }
 }
