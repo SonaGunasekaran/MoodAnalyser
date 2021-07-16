@@ -4,23 +4,40 @@ using System.Text;
 
 namespace MoodAnalyser
 {
-   public class Mood
+    public class Mood
     {
         string message;
-        public Mood(string msg)
+        public Mood(string message)
         {
-            this.message = msg;
+            this.message = message;
         }
 
         public string CheckMood()
         {
-            if (this.message.ToLower().Contains("happy"))
+            try
+            {
+                message = message.ToLower();
+                if (message.Equals(string.Empty))
+                {
+                    throw new CustomMoodAnalyser(CustomMoodAnalyser.ExceptionType.EMPTY_EXCEPTION, "Mood should not be empty");
+
+                }
+                if (message.Equals(null))
+                {
+                    throw new CustomMoodAnalyser(CustomMoodAnalyser.ExceptionType.NULL_EXCEPTION, "Mood should not be null");
+                }
+                if (message.Contains("sad"))
+                {
+                    return "sad";
+                }
+                else
+                {
+                    return "happy";
+                }
+            }
+            catch (NullReferenceException e)
             {
                 return "happy";
-            }
-            else
-            {
-                return "sad";
             }
         }
     }
