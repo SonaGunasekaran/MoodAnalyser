@@ -35,5 +35,37 @@ namespace MoodAnalyser
             }
 
         }
+        public static object ParameterizedConstructor(string className, string constructorName, string message)
+        {
+            Type type = Type.GetType(className);
+            try
+            {
+                if (type.FullName.Equals(className) || type.Name.Equals(className))
+                {
+                    if (type.Name.Equals(constructorName))
+                    {
+                        ConstructorInfo info = type.GetConstructor(new[] { typeof(string) });
+                        object instance = info.Invoke(new object[] { message });
+                        return instance;
+                    }
+                    //if class and constructor name is not equal then it throws constructor not found exception
+                    else
+                    {
+                        throw new CustomMoodAnalyserException(CustomMoodAnalyserException.ExceptionType.CONSTRUCTOR_NOT_FOUND, "Constructor not found");
+                    }
+
+                }
+                //if class is not found then it throws class not found exception
+                else
+                {
+                    throw new CustomMoodAnalyserException(CustomMoodAnalyserException.ExceptionType.CLASS_NOT_FOUND, "Class not found");
+                }
+            }
+            catch (Exception ex)
+            {
+                return ex;
+            }
+        }
+        
     }
 }
