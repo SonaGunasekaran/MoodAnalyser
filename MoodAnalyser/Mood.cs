@@ -19,12 +19,12 @@ namespace MoodAnalyser
                 message = message.ToLower();
                 if (message.Equals(string.Empty))
                 {
-                    throw new CustomMoodAnalyser(CustomMoodAnalyser.ExceptionType.EMPTY_EXCEPTION, "Mood should not be empty");
+                    throw new CustomMoodAnalyserException(CustomMoodAnalyserException.ExceptionType.EMPTY_EXCEPTION, "Mood should not be empty");
 
                 }
                 if (message.Equals(null))
                 {
-                    throw new CustomMoodAnalyser(CustomMoodAnalyser.ExceptionType.NULL_EXCEPTION, "Mood should not be null");
+                    throw new CustomMoodAnalyserException(CustomMoodAnalyserException.ExceptionType.NULL_EXCEPTION, "Mood should not be null");
                 }
                 if (message.Contains("sad"))
                 {

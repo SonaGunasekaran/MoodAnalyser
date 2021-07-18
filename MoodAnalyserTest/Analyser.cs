@@ -53,7 +53,7 @@ namespace MoodAnalyserTest
                 //act
                 string actual = new Mood(message).CheckMood();
             }
-            catch (CustomMoodAnalyser ex)
+            catch (CustomMoodAnalyserException ex)
             {
                 //assert
                 Assert.AreEqual(expected, ex.Message);
@@ -61,7 +61,7 @@ namespace MoodAnalyserTest
 
         }
         [TestMethod]
-        public void ShoulNotBeNull()
+        public void ShouldNotBeNull()
         {
             string expected = "Mood should not be null";
             try
@@ -70,7 +70,7 @@ namespace MoodAnalyserTest
                 //act
                 string actual = new Mood(message).CheckMood();
             }
-            catch (CustomMoodAnalyser ex)
+            catch (CustomMoodAnalyserException ex)
             {
                 //assert
                 Assert.AreEqual(expected, ex.Message);
