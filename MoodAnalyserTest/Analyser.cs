@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MoodAnalyser;
+using System.Reflection;
 
 namespace MoodAnalyserTest
 {
@@ -142,5 +143,63 @@ namespace MoodAnalyserTest
                 Assert.AreEqual(expected, ex.Message);
             }
         }
+        [TestMethod]
+        public void InvokeReflection()
+        {
+            string expected = "Happy";
+            string actual = MoodAnalyserFactory.ChangeMood("i am happy", "AnalyseMood");
+            expected.Equals(actual);
+        }
+        [TestMethod]
+        public void InvokeReflection1()
+        {
+            string expected = "Method not found";
+            try
+            {
+                string actual = MoodAnalyserFactory.ChangeMood("Happy", "AnalyserMood");
+                expected.Equals(actual);
+            }
+            catch (CustomMoodAnalyserException ex)
+            {
+                Assert.AreEqual(expected, ex.Message);
+            }
+
+        }
+        [TestMethod]
+        public void ChangeMoodReflection()
+        {
+            string expected = "Happy";
+            string actual = MoodAnalyserFactory.SetField("Happy", "message");
+            expected.Equals(actual);
+        }
+        [TestMethod]
+        public void ChangeMoodReflection1()
+        {
+            string expected = "Field is not found";
+            try
+            {
+                string actual = MoodAnalyserFactory.SetField("Happy", "message");
+                expected.Equals(actual);
+            }
+            catch (CustomMoodAnalyserException ex)
+            {
+                Assert.AreEqual(expected, ex.Message);
+            }
+        }
+        [TestMethod]
+        public void ChangeMoodReflection2()
+        {
+            string expected = "Message should not be null";
+            try
+            {
+                string actual = MoodAnalyserFactory.SetField(null, "message");
+                expected.Equals(actual);
+            }
+            catch (CustomMoodAnalyserException ex)
+            {
+                Assert.AreEqual(expected, ex.Message);
+            }
+        }
+
     }
 }
