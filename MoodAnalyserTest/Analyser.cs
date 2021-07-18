@@ -75,7 +75,6 @@ namespace MoodAnalyserTest
                 //assert
                 Assert.AreEqual(expected, ex.Message);
             }
-
         }
         [TestMethod]
         public void MoodAnalyserReflection()
@@ -84,7 +83,6 @@ namespace MoodAnalyserTest
             object actual = MoodAnalyserFactory.CreateObjectForMoodAnalyser("MoodAnalyzer.MoodAnalyze", "MoodAnalyze");
             expected.Equals(actual);
         }
-
         [TestMethod]
         public void MoodAnalyserobjectReflection()
         {
@@ -105,6 +103,39 @@ namespace MoodAnalyserTest
             try
             {
                 object actual = MoodAnalyserFactory.CreateObjectForMoodAnalyser("MoodAnalyzer.MoodAnalyze", "MoodAnalyzer");
+            }
+            catch (CustomMoodAnalyserException ex)
+            {
+                Assert.AreEqual(expected, ex.Message);
+            }
+        }
+        [TestMethod]
+        public void ObjectParameterizedConstructor()
+        {
+            object expected = new Mood("Happy");
+            object actual = MoodAnalyserFactory.ParameterizedConstructor("MoodAnalyzer.MoodAnalyze", "MoodAnalyze", "Happy");
+            expected.Equals(actual);
+        }
+        [TestMethod]
+        public void ObjectParameterizedConstructor1()
+        {
+            string expected = "Class not found";
+            try
+            {
+                object actual = MoodAnalyserFactory.ParameterizedConstructor("MoodAnalyzer.MoodAnalyzer", "MoodAnalyzer", "Happy");
+            }
+            catch (CustomMoodAnalyserException ex)
+            {
+                Assert.AreEqual(expected, ex.Message);
+            }
+        }
+        [TestMethod]
+        public void ObjectParameterizedConstructor2()
+        {
+            string expected = "Constructor not found";
+            try
+            {
+                object actual = MoodAnalyserFactory.ParameterizedConstructor("MoodAnalyzer.MoodAnalyze", "MoodAnalyzer", "I am happy");
             }
             catch (CustomMoodAnalyserException ex)
             {
