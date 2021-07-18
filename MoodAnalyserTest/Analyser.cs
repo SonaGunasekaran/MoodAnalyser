@@ -53,7 +53,7 @@ namespace MoodAnalyserTest
                 //act
                 string actual = new Mood(message).CheckMood();
             }
-            catch (CustomMoodAnalyser ex)
+            catch (CustomMoodAnalyserException ex)
             {
                 //assert
                 Assert.AreEqual(expected, ex.Message);
@@ -61,7 +61,7 @@ namespace MoodAnalyserTest
 
         }
         [TestMethod]
-        public void ShoulNotBeNull()
+        public void ShouldNotBeNull()
         {
             string expected = "Mood should not be null";
             try
@@ -70,12 +70,46 @@ namespace MoodAnalyserTest
                 //act
                 string actual = new Mood(message).CheckMood();
             }
-            catch (CustomMoodAnalyser ex)
+            catch (CustomMoodAnalyserException ex)
             {
                 //assert
                 Assert.AreEqual(expected, ex.Message);
             }
 
+        }
+        [TestMethod]
+        public void MoodAnalyserReflection()
+        {
+            object expected = new Mood();
+            object actual = MoodAnalyserFactory.CreateObjectForMoodAnalyser("MoodAnalyzer.MoodAnalyze", "MoodAnalyze");
+            expected.Equals(actual);
+        }
+
+        [TestMethod]
+        public void MoodAnalyserobjectReflection()
+        {
+            string expected = "Class not found";
+            try
+            {
+                object actual = MoodAnalyserFactory.CreateObjectForMoodAnalyser("MoodAnalyzer.MoodAnalyzer", "MoodAnalyzer");
+            }
+            catch (CustomMoodAnalyserException ex)
+            {
+                Assert.AreEqual(expected, ex.Message);
+            }
+        }
+        [TestMethod]
+        public void MoodAnalyserObjectReflection1()
+        {
+            string expected = "Constructor not found";
+            try
+            {
+                object actual = MoodAnalyserFactory.CreateObjectForMoodAnalyser("MoodAnalyzer.MoodAnalyze", "MoodAnalyzer");
+            }
+            catch (CustomMoodAnalyserException ex)
+            {
+                Assert.AreEqual(expected, ex.Message);
+            }
         }
     }
 }
